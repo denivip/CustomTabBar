@@ -27,7 +27,7 @@
 
 #import "WBTabBarController.h"
 
-@interface WBTabBarController ()
+@interface WBTabBarController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
 
@@ -49,7 +49,7 @@
 {
     [super viewDidLoad];
 
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"hood.png"] highlightImage:[UIImage imageNamed:@"hood-selected.png"] target:self action:@selector(buttonPressed:)];
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"centerButton"] highlightImage:[UIImage imageNamed:@"centerButton_h"] target:self action:@selector(buttonPressed:)];
 }
 
 - (void)viewDidUnload
@@ -94,7 +94,8 @@
 }
 
 - (void)doHighlight:(UIButton*)b {
-    [b setHighlighted:YES];
+    [self takePhoto:b];
+//    [b setHighlighted:YES];
 }
 
 - (void)doNotHighlight:(UIButton*)b {
@@ -118,4 +119,30 @@
     self.tabBar.hidden = tabBarHidden;
 }
 
+
+- (IBAction)takePhoto:(UIButton *)sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+//    .image = chosenImage;
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
 @end
