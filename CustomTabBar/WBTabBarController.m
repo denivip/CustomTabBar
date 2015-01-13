@@ -72,19 +72,25 @@
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [button setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
     
-    CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
-    if (heightDifference < 0) {
-        button.center = self.tabBar.center;
-    } else {
-        CGPoint center = self.tabBar.center;
-        center.y = center.y - heightDifference/2.0;
-        button.center = center;
-    }
+    CGPoint center = self.tabBar.center;
+    center.y = CGRectGetHeight(self.view.frame) - buttonImage.size.height/2.0 - 20;
+    button.center = center;
     
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     
+    UILabel *label = [UILabel new];
+    label.text = NSLocalizedString(@"New B.EAT", nil);
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:12.f];
+    [label sizeToFit];
+
+    center = self.tabBar.center;
+    center.y = CGRectGetHeight(self.view.frame) - label.frame.size.height/2;
+    label.center = center;
     [self.view addSubview:button];
-    self.centerButton = button;
+   self.centerButton = button;
+
+    [self.view addSubview:label];
 }
 
 - (void)buttonPressed:(id)sender
