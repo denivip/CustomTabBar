@@ -26,6 +26,7 @@
 //
 
 #import "WBTabBarController.h"
+#import "DVGCameraViewController.h"
 
 @interface WBTabBarController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -127,13 +128,14 @@
 
 
 - (IBAction)takePhoto:(UIButton *)sender {
+    DVGCameraViewController *controller = (DVGCameraViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"DVGCameraViewController"];
+
+//    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+//    picker.delegate = self;
+//    picker.allowsEditing = YES;
+//    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    [self presentViewController:picker animated:YES completion:NULL];
+    [self presentViewController:controller animated:YES completion:NULL];
     
 }
 
